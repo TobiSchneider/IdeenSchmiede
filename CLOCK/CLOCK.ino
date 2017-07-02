@@ -143,7 +143,7 @@ void displayWords() {
     matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],WHITE);
     matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],WHITE);
     }
-  if(minutes<30){
+  if(minutes<25){
     // Calculate hour 
     if(hours==1 || hours==13 ){
       if(trigger==1){
@@ -186,7 +186,7 @@ void displayWords() {
     matrix.drawLine(hourZWOELF[1],hourZWOELF[3],hourZWOELF[2],hourZWOELF[3],WHITE);
     }
   }
-  if(minutes >= 30){
+  if(minutes>24){
     // Calculate hour 
     if(hours==1 || hours==13 ){
      matrix.drawLine(hourZwei[1],hourZwei[3],hourZwei[2],hourZwei[3],WHITE);
