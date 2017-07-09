@@ -16,6 +16,7 @@
 #define YELLOW   0xFFE0 
 #define WHITE    0xFFFF
 #define pause    500
+#define initTime 100
 //------------------------------------------------
 static const int phraseES[4]        = {0,0,1,9};
 static const int phraseIST[4]       = {0,3,5,9};
@@ -66,6 +67,40 @@ Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(11, 11, 5,
   NEO_MATRIX_TOP     + NEO_MATRIX_LEFT +
   NEO_MATRIX_ROWS + NEO_MATRIX_ZIGZAG,
   NEO_GRB            + NEO_KHZ800);
+
+//Funktion für Initialisierung der Uhr
+void initClock(){
+  for(int i = 0; i<11; i++) {
+    matrix.drawPixel(i,0,RED);
+    matrix.drawPixel(10-i,1,GREEN);
+    matrix.drawPixel(i,2,BLUE);
+    matrix.drawPixel(10-i,3,RED);
+    matrix.drawPixel(i,4,GREEN);
+    matrix.drawPixel(10-i,5,BLUE);
+    matrix.drawPixel(i,6,RED);
+    matrix.drawPixel(10-i,7,GREEN);
+    matrix.drawPixel(i,8,BLUE);
+    matrix.drawPixel(10-i,9,RED);
+    matrix.drawPixel(i,10,GREEN);
+    matrix.show();
+    delay(initTime);
+  }
+  for(int j = 0; j<11; j++) {
+    matrix.drawPixel(j,0,BLACK);
+    matrix.drawPixel(10-j,1,BLACK);
+    matrix.drawPixel(j,2,BLACK);
+    matrix.drawPixel(10-j,3,BLACK);
+    matrix.drawPixel(j,4,BLACK);
+    matrix.drawPixel(10-j,5,BLACK);
+    matrix.drawPixel(j,6,BLACK);
+    matrix.drawPixel(10-j,7,BLACK);
+    matrix.drawPixel(j,8,BLACK);
+    matrix.drawPixel(10-j,9,BLACK);
+    matrix.drawPixel(j,10,BLACK);
+    matrix.show();
+    delay(initTime);
+  }
+}
 
 void displayWords() {
   for (int i = 0; i<11; i++) {
@@ -304,6 +339,7 @@ void setup() {
   matrix.begin();
   matrix.setBrightness (128);
   matrix.show();
+  initClock(); //Aufrufen der Initialisierung
   initWifi();
 }
 void loop() {
