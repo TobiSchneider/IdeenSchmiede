@@ -4,6 +4,9 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
+#include <DNSServer.h>            //Local DNS Server used for redirecting all requests to the configuration portal
+#include <ESP8266WebServer.h>     //Local WebServer used to serve the configuration portal
+#include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager WiFi Configuration Magic
 //------------------------------------------------
 #define BLYNK_PRINT Serial
 //------------------------------------------------
@@ -259,9 +262,11 @@ String getTime() {
 }
 
 void initWifi() {
+  WiFiManager wifiManager;      
+  wifiManager.autoConnect("Wordclock", "Batman123");      //Log In zum Wifimanager
+  Serial.println(); 
    Serial.print("Connecting to ");
    Serial.print(ssid);
-   WiFi.begin(ssid, password);
   
    while (WiFi.status() != WL_CONNECTED) {
       matrix.drawLine(phraseWLAN[1],phraseWLAN[3],phraseWLAN[2],phraseWLAN[3],RED);
