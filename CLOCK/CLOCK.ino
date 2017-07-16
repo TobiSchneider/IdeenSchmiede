@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
 #include <Adafruit_NeoPixel.h>
@@ -7,6 +9,7 @@
 #include <DNSServer.h>            //Local DNS Server used for redirecting all requests to the configuration portal
 #include <ESP8266WebServer.h>     //Local WebServer used to serve the configuration portal
 #include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager WiFi Configuration Magic
+#include <EEPROM.h>
 //------------------------------------------------
 #define BLYNK_PRINT Serial
 //------------------------------------------------
@@ -16,7 +19,7 @@
 #define GREEN    0x07E0
 #define CYAN     0x07FF
 #define MAGENTA  0xF81F
-#define YELLOW   0xFFE0 
+#define YELLOW   0xFFE0
 #define WHITE    0xFFFF
 #define pause    500
 #define initTime 100
@@ -63,11 +66,14 @@ static const int hourZWANZIG[4]     = {0,4,10,8};
   char *hourTIME;
   char *minTIME;
   char *secTIME;
-  char auth[] = "YourAuthToken";
+  char auth[] = "7a7d8af34e37437cae1d203c74cb943e";
   int trigger = 0;
   String Ntime;
   int color=WHITE;
   String regg[55];
+  String theDate;
+  String BORN="Fri, 14 Jul 2017 0:0:0 GMT";
+
 Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(11, 11, 5,
   NEO_MATRIX_TOP     + NEO_MATRIX_LEFT +
   NEO_MATRIX_ROWS + NEO_MATRIX_ZIGZAG,
@@ -135,10 +141,10 @@ void displayWords() {
       matrix.drawLine(3,10,3,10,color);
     }
   //calculate minutes on the hour
-    if(minutes<5){
+    if(minutes<30 || minutes>34){
     matrix.drawLine(phraseUHR[1],phraseUHR[3],phraseUHR[2],phraseUHR[3],color);
     trigger=1;
-    }    
+    }
     if(minutes>4 && minutes<10){
     matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
     matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
@@ -161,12 +167,12 @@ void displayWords() {
     matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
     }
     if(minutes>29 && minutes<35){
-    matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);  
+    matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
     }
     if(minutes>34 && minutes<40){
     matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
     matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
-    matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);  
+    matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
     }
     if(minutes>39 && minutes<45){
     matrix.drawLine(hourZWANZIG[1],hourZWANZIG[3],hourZWANZIG[2],hourZWANZIG[3],color);
@@ -175,7 +181,7 @@ void displayWords() {
     if(minutes>44 && minutes<50){
     matrix.drawLine(phraseVIERTEL[1],phraseVIERTEL[3],phraseVIERTEL[2],phraseVIERTEL[3],color);
     matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
-    }    
+    }
     if(minutes>49 && minutes<55){
     matrix.drawLine(hourZEHNm[1],hourZEHNm[3],hourZEHNm[2],hourZEHNm[3],color);
     matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
@@ -185,7 +191,7 @@ void displayWords() {
     matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
     }
   if(minutes<25){
-    // Calculate hour 
+    // Calculate hour
     if(hours==1 || hours==13 ){
       if(trigger==1){
         matrix.drawLine(hourEIN[1],hourEIN[3],hourEIN[2],hourEIN[3],color);
@@ -228,8 +234,8 @@ void displayWords() {
     }
   }
   if(minutes>24){
-    // Calculate hour 
-    if(hours==1 || hours==13 ){
+    // Calculate hour
+    if(hours==25 || hours==13 ){
      matrix.drawLine(hourZwei[1],hourZwei[3],hourZwei[2],hourZwei[3],color);
     }
     if(hours==2 || hours==14 ){
@@ -262,7 +268,7 @@ void displayWords() {
     if(hours==11 || hours==23 ){
     matrix.drawLine(hourZWOELF[1],hourZWOELF[3],hourZWOELF[2],hourZWOELF[3],color);
     }
-    if(hours==12 || hours==0 ){
+    if(hours==12 || hours==24 ){
     matrix.drawLine(hourEINS[1],hourEINS[3],hourEINS[2],hourEINS[3],color);
     }
   }
@@ -275,20 +281,28 @@ String getTime() {
     Serial.println("connection failed, retrying...");
   }
   client.print("HEAD / HTTP/1.1\r\n\r\n");
+  int jesus = 1;
   while(!!!client.available()) {
+     delay(10);
      yield();
+     jesus ++;
+     if(jesus>190){
+            Serial.println("Jesus Christ it's Jason Born! -----------------------------------------------------------------");
+            return BORN;
+     }
   }
   while(client.available()){
-    if (client.read() == '\n') {    
-      if (client.read() == 'D') {    
-        if (client.read() == 'a') {    
-          if (client.read() == 't') {    
-            if (client.read() == 'e') {    
-              if (client.read() == ':') {    
+    if (client.read() == '\n') {
+      if (client.read() == 'D') {
+        if (client.read() == 'a') {
+          if (client.read() == 't') {
+            if (client.read() == 'e') {
+              if (client.read() == ':') {
                 client.read();
                 String theDate = client.readStringUntil('\r');
                 client.stop();
                 //Serial.println(theDate);
+                BORN=theDate;
                 return theDate;
               }
             }
@@ -304,9 +318,9 @@ void initWifi() {
   matrix.show();
   delay(1000);
 // -----------------------------------------------------------------------
-  WiFiManager wifiManager;      
+  WiFiManager wifiManager;
   wifiManager.autoConnect("Wordclock", "Batman123");      //Log In zum Wifimanager
-  Serial.println(); 
+  Serial.println();
   Serial.print("Connecting to ");
   Serial.print(ssid);
 // -----------------------------------------------------------------------
@@ -319,9 +333,9 @@ void initWifi() {
 }
 
 String hourMIN() {
-    String TIME = getTime();
-      for(int f=0;f<40;f++){
-        TIMEC[f]=TIME[f];
+  String TIME = getTime();
+  for(int f=0;f<40;f++){
+      TIMEC[f]=TIME[f];
       }
   char *p = strtok (TIMEC, " ");
   char *wups[50];
@@ -336,7 +350,7 @@ String hourMIN() {
       minTIME =g;
       g = strtok (NULL, ":");
       secTIME =g;
-      g = strtok (NULL, ":");  
+      g = strtok (NULL, ":");
     }
   }
   hours=atoi( hourTIME)+2;
@@ -346,100 +360,101 @@ String hourMIN() {
 
 void MyServer() {
   WiFiClient client = server.available();
+
   if (!client) {
     return;
   }
-  while(!client.available()){
-    delay(1);
-  }
-  String req = client.readStringUntil('\r');
-  if (req.indexOf("favicon") == -1){
-    Serial.println(req);
-    Serial.println(Ntime);
-    client.flush();
-    delay(100);
-    char copy[30];
-    req.toCharArray(copy, 30);
-    // Match the request
-    if (req.indexOf("/color/") != -1){
-      
-      switch (copy[11]){
-        case 'w':
-              Serial.println("set Color: WHITE" );
-              color=WHITE;
-              break;
-        case 'y':
-              color=YELLOW;
-              break;
-        case 'g':
-              color=GREEN;
-              break;
-        case 'b':
-              color=BLUE;
-              break;
-        case 'r':
-              color=RED;
-              break;
-        case 'm':
-              color=MAGENTA;
-              break;
-        case 'c':
-              color=CYAN;
-              break;
-      }
-    }
-    else if(req.indexOf("/brightness/") != -1){
-    char numbers[3];
-    numbers[0] = copy[16];
-    numbers[1] = copy[17];
-    numbers[2] = copy[18];
-    numbers[3] = '\0';
-    int numbersC = atoi(numbers);
-    matrix.setBrightness (numbersC);
-    Serial.println("set brightness: " );
-    Serial.println(numbersC);
 
+  if (client.available()){
+    String req = client.readStringUntil('\r');
+    if (req.indexOf("favicon") == -1){
+      Serial.println(req);
+      Serial.println(Ntime);
+      client.flush();
+      delay(100);
+      char copy[30];
+      req.toCharArray(copy, 30);
+      // Match the request
+      if (req.indexOf("/color/") != -1){
+        switch (copy[11]){
+          case 'w':
+                Serial.println("set Color: WHITE" );
+                color=WHITE;
+                break;
+          case 'y':
+                color=YELLOW;
+                break;
+          case 'g':
+                color=GREEN;
+                break;
+          case 'b':
+                color=BLUE;
+                break;
+          case 'r':
+                color=RED;
+                break;
+          case 'm':
+                color=MAGENTA;
+                break;
+          case 'c':
+                color=CYAN;
+                break;
+        }
+      }
+      else if (req.indexOf("/brightness/") != -1){
+      char numbers[3];
+      numbers[0] = copy[16];
+      numbers[1] = copy[17];
+      numbers[2] = copy[18];
+      numbers[3] = '\0';
+      int numbersC = atoi(numbers);
+      matrix.setBrightness (numbersC);
+      Serial.println("set brightness: " );
+      Serial.println(numbersC);
+      }
+      else {
+        Serial.println("invalid request");
+        return;
+      }
+      client.flush();
+      // response
+      String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\nCOLOR is now ";
+      s += (color)?"high":"low";
+      s += "</html>\n";
+      client.print(s);
+      delay(1);
     }
-    else {
-      Serial.println("invalid request");
-      return;
-    }
-    client.flush();
-    // response
-    String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\nCOLOR is now ";
-    s += (color)?"high":"low";
-    s += "</html>\n";
-    client.print(s);
-    delay(1);
-   } 
+  }
 }
 
 void setup() {
     // Debug console
   Serial.begin(9600);
-  //Blynk.begin(auth, ssid, pass);
   matrix.begin();
   matrix.setBrightness (128);
   matrix.show();
   initClock(); //Aufrufen der Initialisierung
   initWifi();
+  Serial.println(WiFi.localIP());
+  //Blynk.begin(auth,  WiFi.SSID().c_str(), WiFi.psk().c_str());
 }
 
 void loop() {
-// -----------------------------------------------------------------------
   if (WiFi.status() != WL_CONNECTED) {
+// -----------------------------------------------------------------------
       initWifi();
-      Serial.println("Wifi connection lost, reconnecting ...");
+// -----------------------------------------------------------------------
    }
    else{
-// -----------------------------------------------------------------------
+     // Blynk.run();
 // -----------------------------------------------------------------------
       Ntime = hourMIN();
+// -----------------------------------------------------------------------
       MyServer();
-      //Serial.println(WiFi.localIP());
       delay(500);
-  // -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
       displayWords();
+// -----------------------------------------------------------------------
    }
   matrix.show();
 }
