@@ -78,6 +78,33 @@ static const int phraseUHR[4]       = {0,8,10,0};
   String BORN="Fri, 14 Jul 2017 0:0:0 GMT";
   boolean extended_1 = 1;
   boolean extended_2 = 1;
+  boolean trans_state_phraseES = 0;
+  boolean trans_state_phraseIST = 0;
+  boolean trans_state_phraseVOR = 0;
+  boolean trans_state_phraseNACH = 0;
+  boolean trans_state_phraseHALBm = 0;
+  boolean trans_state_phraseHALBs = 0;
+  boolean trans_state_phraseVIERTEL = 0;
+  boolean trans_state_phraseUHR = 0;
+  boolean trans_state_phraseOK = 0;
+  boolean trans_state_phraseNO = 0;
+  boolean trans_state_phraseWLAN = 0;
+  boolean trans_state_hourEIN = 0;
+  boolean trans_state_hourEINS = 0;
+  boolean trans_state_hourZwei = 0;
+  boolean trans_state_hourDREI = 0;
+  boolean trans_state_hourVIER = 0;
+  boolean trans_state_hourFUENFm = 0;
+  boolean trans_state_hourFUENFs = 0;
+  boolean trans_state_hourSECHS = 0;
+  boolean trans_state_hourSIEBEN = 0;
+  boolean trans_state_hourACHT = 0;
+  boolean trans_state_hourNEUN = 0;
+  boolean trans_state_hourZEHNm = 0;
+  boolean trans_state_hourZEHNs = 0;
+  boolean trans_state_hourELF = 0;
+  boolean trans_state_hourZWOELF = 0;
+  boolean trans_state_hourZWANZIG = 0;
   //------------------------------------------------
 
 
@@ -151,140 +178,1007 @@ void displayWords() {
     }
   //calculate minutes on the hour
     if(minutes<5){
-    matrix.drawLine(phraseUHR[1],phraseUHR[3],phraseUHR[2],phraseUHR[3],color);
-    trigger=1;
-    }
-    if(((minutes>5 && minutes<25) || minutes>35) && extended_2){
-    matrix.drawLine(phraseUHR[1],phraseUHR[3],phraseUHR[2],phraseUHR[3],color);
-    }
-    if(minutes<30 || minutes>34){
-      matrix.drawLine(phraseMINUTEN[1],phraseMINUTEN[3],phraseMINUTEN[2],phraseMINUTEN[3],color);
-    }
-    if(minutes>4 && minutes<10){
-    matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
-    matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
-    }
-    if(minutes>9 && minutes<15){
-    matrix.drawLine(hourZEHNm[1],hourZEHNm[3],hourZEHNm[2],hourZEHNm[3],color);
-    matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
-    }
-    if(minutes>14 && minutes<20){
-    matrix.drawLine(phraseVIERTEL[1],phraseVIERTEL[3],phraseVIERTEL[2],phraseVIERTEL[3],color);
-    matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
-    }
-    if(minutes>19 && minutes<25){
-    matrix.drawLine(hourZWANZIG[1],hourZWANZIG[3],hourZWANZIG[2],hourZWANZIG[3],color);
-    matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
-    }
-    if(minutes>24 && minutes<30){
-    matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
-    matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
-    matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
-    }
-    if(minutes>29 && minutes<35){
-    matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
-    }
-    if(minutes>34 && minutes<40){
-    matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
-    matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
-    matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
-    }
-    if(minutes>39 && minutes<45){
-    matrix.drawLine(hourZWANZIG[1],hourZWANZIG[3],hourZWANZIG[2],hourZWANZIG[3],color);
-    matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
-    }
-    if(minutes>44 && minutes<50){
-    matrix.drawLine(phraseVIERTEL[1],phraseVIERTEL[3],phraseVIERTEL[2],phraseVIERTEL[3],color);
-    matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
-    }
-    if(minutes>49 && minutes<55){
-    matrix.drawLine(hourZEHNm[1],hourZEHNm[3],hourZEHNm[2],hourZEHNm[3],color);
-    matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
-    }
-    if(minutes>54 && minutes<60){
-    matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
-    matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
-    }
-  if(minutes<25){
-    // Calculate hour
-    if((hours%12)==1){
-      if(trigger==1){
-        matrix.drawLine(hourEIN[1],hourEIN[3],hourEIN[2],hourEIN[3],color);
-      }else{
-        matrix.drawLine(hourEINS[1],hourEINS[3],hourEINS[2],hourEINS[3],color);
+      if(trans_state_phraseUHR == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseUHR = 1;
+        trigger=1;
+      }
+      else if(trans_state_phraseUHR == 1)
+      {
+        matrix.drawLine(phraseUHR[1],phraseUHR[3],phraseUHR[2],phraseUHR[3],color);
+        trigger=1;
       }
     }
-    if((hours%12)==2){
-     matrix.drawLine(hourZwei[1],hourZwei[3],hourZwei[2],hourZwei[3],color);
+    
+    if(((minutes>5 && minutes<25) || minutes>35) && extended_2){
+      if(trans_state_phraseUHR == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseUHR = 1;
+      }
+      else if(trans_state_phraseUHR == 1)
+      {
+        matrix.drawLine(phraseUHR[1],phraseUHR[3],phraseUHR[2],phraseUHR[3],color);
+      }
     }
-    if((hours%12)==3){
-    matrix.drawLine(hourDREI[1],hourDREI[3],hourDREI[2],hourDREI[3],color);
+    
+    if(minutes>4 && minutes<10){
+      if(trans_state_hourFUENFm == 0)
+      {
+        //Hier Transition einfügen
+        Serial.println("Fünf");
+        trans_state_hourFUENFm = 1;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 0;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+      }
+      else if(trans_state_hourFUENFm == 1)
+      {
+        matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
+      }
+      if(trans_state_phraseNACH == 0)
+      {
+        //Hier Transition einfügen
+        Serial.println("Nach");
+        trans_state_phraseNACH = 1;
+        trans_state_phraseVOR = 0;
+      }
+      else if(trans_state_phraseNACH == 1)
+      {
+        matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
+      }
     }
-    if((hours%12)==4){
-     matrix.drawLine(hourVIER[1],hourVIER[3],hourVIER[2],hourVIER[3],color);
+    
+    if(minutes>9 && minutes<15){
+      if(trans_state_hourZEHNm == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 0;
+        trans_state_hourZEHNm = 1;
+        trans_state_phraseVIERTEL = 0;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+        Serial.println("Zehn");
+      }
+      else if(trans_state_hourZEHNm == 1)
+      {
+        matrix.drawLine(hourZEHNm[1],hourZEHNm[3],hourZEHNm[2],hourZEHNm[3],color);
+      }
+      if(trans_state_phraseNACH == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseNACH = 1;
+        trans_state_phraseVOR = 0;
+        Serial.println("Nach");
+      }
+      else if(trans_state_phraseNACH == 1){
+        matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
+      }
     }
-    if((hours%12)==5){
-     matrix.drawLine(hourFUENFs[1],hourFUENFs[3],hourFUENFs[2],hourFUENFs[3],color);
+    if(minutes>14 && minutes<20){
+      if(trans_state_phraseVIERTEL == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 0;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 1;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+        Serial.println("Viertel");
+      }
+      else if(trans_state_phraseVIERTEL == 1)
+      {
+        matrix.drawLine(phraseVIERTEL[1],phraseVIERTEL[3],phraseVIERTEL[2],phraseVIERTEL[3],color);
+      }
+      if(trans_state_phraseNACH == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseNACH = 1;
+        trans_state_phraseVOR = 0;
+        Serial.println("Nach");
+      }
+      else if(trans_state_phraseNACH == 1)
+      {
+        matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
+      }
     }
-    if((hours%12)==6){
-     matrix.drawLine(hourSECHS[1],hourSECHS[3],hourSECHS[2],hourSECHS[3],color);
+    
+    if(minutes>19 && minutes<25)
+    {
+      if(trans_state_hourZWANZIG == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 0;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 0;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 1;
+        Serial.println("Zwanzig");
+      }
+      else if(trans_state_hourZWANZIG == 1)
+      {
+        matrix.drawLine(hourZWANZIG[1],hourZWANZIG[3],hourZWANZIG[2],hourZWANZIG[3],color);
+      }
+      if(trans_state_phraseNACH == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseNACH = 1;
+        trans_state_phraseVOR = 0;
+        Serial.println("Nach");
+      }
+      else if(trans_state_phraseNACH == 1)
+      {
+        matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
+      }
     }
-    if((hours%12)==7){
-     matrix.drawLine(hourSIEBEN[1],hourSIEBEN[3],hourSIEBEN[2],hourSIEBEN[3],color);
+    
+    if(minutes>24 && minutes<30)
+    {
+      if(trans_state_hourFUENFm == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 1;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 0;
+        //trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+        Serial.println("Fünf");
+      }
+      else if(trans_state_hourFUENFm == 1)
+      {
+        matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
+      }
+      if(trans_state_phraseVOR == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseVOR = 1;
+        trans_state_phraseNACH = 0;
+        Serial.println("Vor");
+      }
+      else if(trans_state_phraseVOR == 1)
+      {
+        matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
+      }
+      if(trans_state_phraseHALBm == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseHALBm = 1;
+        Serial.println("Halb");
+      }
+      else if(trans_state_phraseHALBm == 1)
+      {
+        matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
+      }
     }
-    if((hours%12)==8){
-     matrix.drawLine(hourACHT[1],hourACHT[3],hourACHT[2],hourACHT[3],color);
+
+    if(minutes>29 && minutes<35)
+    {
+      if(trans_state_phraseHALBs == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseHALBs = 1;
+        trans_state_hourFUENFm = 0;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 0;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+        trans_state_phraseVOR = 0;
+        trans_state_phraseNACH = 0;
+        Serial.println("Halb");
+      }
+      else if(trans_state_phraseHALBs == 1)
+      {
+        matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
+      }
     }
-    if((hours%12)==9){
-     matrix.drawLine(hourNEUN[1],hourNEUN[3],hourNEUN[2],hourNEUN[3],color);
+    
+    if(minutes>34 && minutes<40)
+    {
+      if(trans_state_hourFUENFm == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 1;
+        trans_state_phraseHALBs = 0;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 0;
+        //trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+        Serial.println("Fünf");
+      }
+      else if(trans_state_hourFUENFm == 1)
+      {
+        matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
+      }
+      if(trans_state_phraseNACH == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseNACH = 1;
+        trans_state_phraseVOR = 0;
+        Serial.println("Nach");
+      }
+      else if(trans_state_phraseNACH == 1)
+      {
+        matrix.drawLine(phraseNACH[1],phraseNACH[3],phraseNACH[2],phraseNACH[3],color);
+      }
+      if(trans_state_phraseHALBm == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseHALBm = 1;
+        Serial.println("Halb");
+      }
+      else if(trans_state_phraseHALBm == 1)
+      {
+        matrix.drawLine(phraseHALB[1],phraseHALB[3],phraseHALB[2],phraseHALB[3],color);
+      }
     }
-    if((hours%12)==10){
-     matrix.drawLine(hourZEHNs[1],hourZEHNs[3],hourZEHNs[2],hourZEHNs[3],color);
+    
+    if(minutes>39 && minutes<45)
+    {
+      if(trans_state_hourZWANZIG == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 0;
+        trans_state_phraseHALBs = 0;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 0;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 1;
+        Serial.println("Zwanzig");
+      }
+      else if(trans_state_hourZWANZIG == 1)
+      {
+        matrix.drawLine(hourZWANZIG[1],hourZWANZIG[3],hourZWANZIG[2],hourZWANZIG[3],color);
+      }
+       if(trans_state_phraseVOR == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseVOR = 1;
+        trans_state_phraseNACH = 0;
+        Serial.println("Vor");
+      }
+      else if(trans_state_phraseVOR == 1)
+      {
+        matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
+      }
     }
-    if((hours%12)==11){
-     matrix.drawLine(hourELF[1],hourELF[3],hourELF[2],hourELF[3],color);
+    
+    if(minutes>44 && minutes<50)
+    {
+      if(trans_state_phraseVIERTEL == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 0;
+        trans_state_phraseHALBs = 0;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 1;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+        Serial.println("Viertel");
+      }
+      else if(trans_state_phraseVIERTEL == 1)
+      {
+        matrix.drawLine(phraseVIERTEL[1],phraseVIERTEL[3],phraseVIERTEL[2],phraseVIERTEL[3],color);
+      }
+       if(trans_state_phraseVOR == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseVOR = 1;
+        trans_state_phraseNACH = 0;
+        Serial.println("Vor");
+      }
+      else if(trans_state_phraseVOR == 1)
+      {
+        matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
+      }
     }
-    if((hours%12)==0){
-    matrix.drawLine(hourZWOELF[1],hourZWOELF[3],hourZWOELF[2],hourZWOELF[3],color);
+    
+    if(minutes>49 && minutes<55)
+    {
+      if(trans_state_hourZEHNm == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 0;
+        trans_state_phraseHALBs = 0;
+        trans_state_hourZEHNm = 1;
+        trans_state_phraseVIERTEL = 0;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+        Serial.println("Zehn");
+      }
+      else if(trans_state_hourZEHNm == 1)
+      {
+        matrix.drawLine(hourZEHNm[1],hourZEHNm[3],hourZEHNm[2],hourZEHNm[3],color);
+      }
+       if(trans_state_phraseVOR == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseVOR = 1;
+        trans_state_phraseNACH = 0;
+        Serial.println("Vor");
+      }
+      else if(trans_state_phraseVOR == 1)
+      {
+        matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
+      }
+    }
+    
+    if(minutes>54 && minutes<60)
+    {
+      if(trans_state_hourFUENFm == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourFUENFm = 1;
+        trans_state_phraseHALBs = 0;
+        trans_state_hourZEHNm = 0;
+        trans_state_phraseVIERTEL = 0;
+        trans_state_phraseHALBm = 0;
+        trans_state_hourZWANZIG = 0;
+        Serial.println("Fünf");
+      }
+      else if(trans_state_hourFUENFm == 1)
+      {
+        matrix.drawLine(hourFUENFm[1],hourFUENFm[3],hourFUENFm[2],hourFUENFm[3],color);
+      }
+       if(trans_state_phraseVOR == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_phraseVOR = 1;
+        trans_state_phraseNACH = 0;
+        Serial.println("Vor");
+      }
+      else if(trans_state_phraseVOR == 1)
+      {
+        matrix.drawLine(phraseVor[1],phraseVor[3],phraseVor[2],phraseVor[3],color);
+      }
+    }
+    
+  if(minutes<25)
+  {
+    // Calculate hour
+    if((hours%12)==1)
+    {
+      if(trigger==1)
+      {
+        if(trans_state_hourEIN == 0)
+        {
+          //Hier Transition einfügen
+          trans_state_hourEIN = 1;
+          trans_state_hourEINS = 0;
+          trans_state_hourZwei = 0;
+          trans_state_hourDREI = 0;
+          trans_state_hourVIER = 0;
+          trans_state_hourFUENFs = 0;
+          trans_state_hourSECHS = 0;
+          trans_state_hourSIEBEN = 0;
+          trans_state_hourACHT = 0;
+          trans_state_hourNEUN = 0;
+          trans_state_hourZEHNs = 0;
+          trans_state_hourELF = 0;
+          trans_state_hourZWOELF = 0;
+          Serial.println("Ein");
+        }
+        else if(trans_state_hourEIN == 1)
+        {
+          matrix.drawLine(hourEIN[1],hourEIN[3],hourEIN[2],hourEIN[3],color);
+        }
+      }
+      else
+      {
+        if(trans_state_hourEINS == 0)
+        {
+          //Hier Transition einfügen
+          trans_state_hourEIN = 0;
+          trans_state_hourEINS = 1;
+          trans_state_hourZwei = 0;
+          trans_state_hourDREI = 0;
+          trans_state_hourVIER = 0;
+          trans_state_hourFUENFs = 0;
+          trans_state_hourSECHS = 0;
+          trans_state_hourSIEBEN = 0;
+          trans_state_hourACHT = 0;
+          trans_state_hourNEUN = 0;
+          trans_state_hourZEHNs = 0;
+          trans_state_hourELF = 0;
+          trans_state_hourZWOELF = 0;
+          Serial.println("Eins");
+        }
+        else if(trans_state_hourEINS == 1)
+        {
+          matrix.drawLine(hourEINS[1],hourEINS[3],hourEINS[2],hourEINS[3],color);
+        }
+      }
+    }
+    
+    if((hours%12)==2)
+    {
+      if(trans_state_hourZwei == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 1;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Zwei");
+      }
+      else if(trans_state_hourZwei == 1)
+      {
+        matrix.drawLine(hourZwei[1],hourZwei[3],hourZwei[2],hourZwei[3],color);
+      }
+    }
+    
+    if((hours%12)==3)
+    {
+      if(trans_state_hourDREI == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 1;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Drei");
+      }
+      else if(trans_state_hourDREI == 1)
+      {
+        matrix.drawLine(hourDREI[1],hourDREI[3],hourDREI[2],hourDREI[3],color);
+      }
+    }
+    
+    if((hours%12)==4)
+    {
+      if(trans_state_hourVIER == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 1;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Vier");
+      }
+      else if(trans_state_hourVIER == 1)
+      {
+        matrix.drawLine(hourVIER[1],hourVIER[3],hourVIER[2],hourVIER[3],color);
+      }
+    }
+    
+    if((hours%12)==5)
+    {
+      if(trans_state_hourFUENFs == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 1;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Fünf");
+      }
+      else if(trans_state_hourFUENFs == 1)
+      {
+        matrix.drawLine(hourFUENFs[1],hourFUENFs[3],hourFUENFs[2],hourFUENFs[3],color);
+      }
+    }
+    
+    if((hours%12)==6)
+    {
+      if(trans_state_hourSECHS == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 1;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Sechs");
+      }
+      else if(trans_state_hourSECHS == 1)
+      {
+       matrix.drawLine(hourSECHS[1],hourSECHS[3],hourSECHS[2],hourSECHS[3],color);
+      }
+    }
+    
+    if((hours%12)==7)
+    {
+      if(trans_state_hourSIEBEN == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 1;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 1;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Sieben");
+      }
+      else if(trans_state_hourSIEBEN == 1)
+      {
+       matrix.drawLine(hourSIEBEN[1],hourSIEBEN[3],hourSIEBEN[2],hourSIEBEN[3],color);
+      }
+    }
+    
+    if((hours%12)==8)
+    {
+      if(trans_state_hourACHT == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 1;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Acht");
+      }
+      else if(trans_state_hourACHT == 1)
+      {
+       matrix.drawLine(hourACHT[1],hourACHT[3],hourACHT[2],hourACHT[3],color);
+      }
+    }
+    
+    if((hours%12)==9)
+    {
+      if(trans_state_hourNEUN == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 1;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Neun");
+      }
+      else if(trans_state_hourNEUN == 1)
+      {
+       matrix.drawLine(hourNEUN[1],hourNEUN[3],hourNEUN[2],hourNEUN[3],color);
+      }
+    }
+    
+    if((hours%12)==10)
+    {
+      if(trans_state_hourZEHNs == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 1;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Zehn");
+      }
+      else if(trans_state_hourZEHNs == 1)
+      {
+       matrix.drawLine(hourZEHNs[1],hourZEHNs[3],hourZEHNs[2],hourZEHNs[3],color);
+      }    
+    }
+    
+    if((hours%12)==11)
+    {
+      if(trans_state_hourELF == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 1;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Elf");
+      }
+      else if(trans_state_hourELF == 1)
+      {
+       matrix.drawLine(hourELF[1],hourELF[3],hourELF[2],hourELF[3],color);
+      }   
+    }
+    
+    if((hours%12)==0)
+    {
+      if(trans_state_hourZWOELF == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEIN = 0;
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 1;
+        Serial.println("Zwölf");
+      }
+      else if(trans_state_hourZWOELF == 1)
+      {
+       matrix.drawLine(hourZWOELF[1],hourZWOELF[3],hourZWOELF[2],hourZWOELF[3],color);
+      }  
     }
   }
-  if(minutes>24){
+  
+  if(minutes>24)
+  {
     // Calculate hour
-    if((hours%12)==1){
-     matrix.drawLine(hourZwei[1],hourZwei[3],hourZwei[2],hourZwei[3],color);
+    if((hours%12)==1)
+    {
+      if(trans_state_hourZwei == 0)
+        {
+          //Hier Transition einfügen
+          trans_state_hourEINS = 0;
+          trans_state_hourZwei = 1;
+          trans_state_hourDREI = 0;
+          trans_state_hourVIER = 0;
+          trans_state_hourFUENFs = 0;
+          trans_state_hourSECHS = 0;
+          trans_state_hourSIEBEN = 0;
+          trans_state_hourACHT = 0;
+          trans_state_hourNEUN = 0;
+          trans_state_hourZEHNs = 0;
+          trans_state_hourELF = 0;
+          trans_state_hourZWOELF = 0;
+          Serial.println("Zwei");
+        }
+        else if(trans_state_hourZwei == 1)
+        {
+          matrix.drawLine(hourZwei[1],hourZwei[3],hourZwei[2],hourZwei[3],color);
+        }
     }
-    if((hours%12)==2){
-    matrix.drawLine(hourDREI[1],hourDREI[3],hourDREI[2],hourDREI[3],color);
+    
+    if((hours%12)==2)
+    {
+      if(trans_state_hourDREI == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 1;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Drei");
+      }
+      else if(trans_state_hourDREI == 1)
+      {
+        matrix.drawLine(hourDREI[1],hourDREI[3],hourDREI[2],hourDREI[3],color);
+      }
     }
-    if((hours%12)==3){
-     matrix.drawLine(hourVIER[1],hourVIER[3],hourVIER[2],hourVIER[3],color);
+    
+    if((hours%12)==3)
+    {
+      if(trans_state_hourVIER == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 1;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Vier");
+      }
+      else if(trans_state_hourVIER == 1)
+      {
+        matrix.drawLine(hourVIER[1],hourVIER[3],hourVIER[2],hourVIER[3],color);
+      }
     }
-    if((hours%12)==4){
-     matrix.drawLine(hourFUENFs[1],hourFUENFs[3],hourFUENFs[2],hourFUENFs[3],color);
+    
+    if((hours%12)==4)
+    {
+      if(trans_state_hourFUENFs == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 1;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Fünf");
+      }
+      else if(trans_state_hourFUENFs == 1)
+      {
+        matrix.drawLine(hourFUENFs[1],hourFUENFs[3],hourFUENFs[2],hourFUENFs[3],color);
+      }
     }
-    if((hours%12)==5){
-     matrix.drawLine(hourSECHS[1],hourSECHS[3],hourSECHS[2],hourSECHS[3],color);
+    
+    if((hours%12)==5)
+    {
+    if(trans_state_hourSECHS == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 1;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 1;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Sechs");
+      }
+      else if(trans_state_hourSECHS == 1)
+      {
+       matrix.drawLine(hourSECHS[1],hourSECHS[3],hourSECHS[2],hourSECHS[3],color);
+      }
     }
-    if((hours%12)==6){
-     matrix.drawLine(hourSIEBEN[1],hourSIEBEN[3],hourSIEBEN[2],hourSIEBEN[3],color);
+    
+    if((hours%12)==6)
+    {
+      if(trans_state_hourSIEBEN == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 1;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Sieben");
+      }
+      else if(trans_state_hourSIEBEN == 1)
+      {
+       matrix.drawLine(hourSIEBEN[1],hourSIEBEN[3],hourSIEBEN[2],hourSIEBEN[3],color);
+      }
     }
-    if((hours%12)==7){
-     matrix.drawLine(hourACHT[1],hourACHT[3],hourACHT[2],hourACHT[3],color);
+    
+    if((hours%12)==7)
+    {
+      if(trans_state_hourACHT == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 1;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Acht");
+      }
+      else if(trans_state_hourACHT == 1)
+      {
+       matrix.drawLine(hourACHT[1],hourACHT[3],hourACHT[2],hourACHT[3],color);
+      }
     }
-    if((hours%12)==8){
-     matrix.drawLine(hourNEUN[1],hourNEUN[3],hourNEUN[2],hourNEUN[3],color);
+    
+    if((hours%12)==8)
+    {
+      if(trans_state_hourNEUN == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 1;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Neun");
+      }
+      else if(trans_state_hourNEUN == 1)
+      {
+       matrix.drawLine(hourNEUN[1],hourNEUN[3],hourNEUN[2],hourNEUN[3],color);
+      }
     }
-    if((hours%12)==9){
-     matrix.drawLine(hourZEHNs[1],hourZEHNs[3],hourZEHNs[2],hourZEHNs[3],color);
+    
+    if((hours%12)==9)
+    {
+      if(trans_state_hourZEHNs == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 1;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Zehn");
+      }
+      else if(trans_state_hourZEHNs == 1)
+      {
+       matrix.drawLine(hourZEHNs[1],hourZEHNs[3],hourZEHNs[2],hourZEHNs[3],color);
+      }
     }
-    if((hours%12)==10){
-     matrix.drawLine(hourELF[1],hourELF[3],hourELF[2],hourELF[3],color);
+    
+    if((hours%12)==10)
+    {
+      if(trans_state_hourELF == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 1;
+        trans_state_hourZWOELF = 0;
+        Serial.println("Elf");
+      }
+      else if(trans_state_hourELF == 1)
+      {
+       matrix.drawLine(hourELF[1],hourELF[3],hourELF[2],hourELF[3],color);
+      }
     }
-    if((hours%12)==11){
-    matrix.drawLine(hourZWOELF[1],hourZWOELF[3],hourZWOELF[2],hourZWOELF[3],color);
+    
+    if((hours%12)==11)
+    {
+      if(trans_state_hourZWOELF == 0)
+      {
+        //Hier Transition einfügen
+        trans_state_hourEINS = 0;
+        trans_state_hourZwei = 0;
+        trans_state_hourDREI = 0;
+        trans_state_hourVIER = 0;
+        trans_state_hourFUENFs = 0;
+        trans_state_hourSECHS = 0;
+        trans_state_hourSIEBEN = 0;
+        trans_state_hourACHT = 0;
+        trans_state_hourNEUN = 0;
+        trans_state_hourZEHNs = 0;
+        trans_state_hourELF = 0;
+        trans_state_hourZWOELF = 1;
+        Serial.println("Zwölf");
+      }
+      else if(trans_state_hourZWOELF == 1)
+      {
+       matrix.drawLine(hourZWOELF[1],hourZWOELF[3],hourZWOELF[2],hourZWOELF[3],color);
+      }
     }
-    if((hours%12)==0){
-    matrix.drawLine(hourEINS[1],hourEINS[3],hourEINS[2],hourEINS[3],color);
+    
+    if((hours%12)==0)
+    {
+      if(trans_state_hourEINS == 0)
+        {
+          //Hier Transition einfügen
+          trans_state_hourEINS = 1;
+          trans_state_hourZwei = 0;
+          trans_state_hourDREI = 0;
+          trans_state_hourVIER = 0;
+          trans_state_hourFUENFs = 0;
+          trans_state_hourSECHS = 0;
+          trans_state_hourSIEBEN = 0;
+          trans_state_hourACHT = 0;
+          trans_state_hourNEUN = 0;
+          trans_state_hourZEHNs = 0;
+          trans_state_hourELF = 0;
+          trans_state_hourZWOELF = 0;
+          Serial.println("Eins");
+        }
+        else if(trans_state_hourEINS == 1)
+        {
+          matrix.drawLine(hourEINS[1],hourEINS[3],hourEINS[2],hourEINS[3],color);
+        }
     }
   }
   trigger=0;
