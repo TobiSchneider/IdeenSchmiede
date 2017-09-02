@@ -1,30 +1,54 @@
 import React, { Component } from 'react';
-import { Alert, AppRegistry, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View, ScrollView } from 'react-native';
+import { Alert, AppRegistry, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View, ScrollView, AsyncStorage } from 'react-native';
 
 export default class Touchables extends Component {
+  componentWillMount(){
+    this.check()
+  }
+  async check() {
+    try {
+      const value = await AsyncStorage.getItem('@MySuperStore:key');
+      if (value !== null){
+        // We have data!!
+        global.gotEEM = value;
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log("fuck2");
+    }
+ }
   _onPressButton_100() {
-    fetch('http://esp8266.local/brightness/255')
+    var requestString = global.gotEEM  + "/brightness/255";
+    fetch(requestString)
   }
   _onPressButton_80() {
-    fetch('http://esp8266.local/brightness/200')
+    var requestString = global.gotEEM  + "/brightness/255";
+    fetch(requestString)
   }
   _onPressButton_60() {
-    fetch('http://esp8266.local/brightness/150')
+    var requestString = global.gotEEM  + "/brightness/150";
+    fetch(requestString)
   }
   _onPressButton_40() {
-    fetch('http://esp8266.local/brightness/100')
+    var requestString = global.gotEEM  + "/brightness/100";
+    fetch(requestString)
   }
   _onPressButton_20() {
-    fetch('http://esp8266.local/brightness/50')
+    var requestString = global.gotEEM  + "/brightness/50";
+    fetch(requestString)
   }
   _onPressButton_10() {
-    fetch('http://esp8266.local/brightness/25')
+    var requestString = global.gotEEM  + "/brightness/25";
+    fetch(requestString)
   }
   _onPressButton_5() {
-    fetch('http://esp8266.local/brightness/12')
+    var requestString = global.gotEEM  + "/brightness/12";
+    fetch(requestString)
   }
   _onPressButton_1() {
-    fetch('http://esp8266.local/brightness/1')
+    var requestString = global.gotEEM  + "/brightness/1";
+    fetch(requestString)
   }
 
 

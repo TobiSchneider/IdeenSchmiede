@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
-import { Alert, AppRegistry, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, AppRegistry, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View, AsyncStorage } from 'react-native';
 
 export default class Touchables extends Component {
+  componentWillMount(){
+    this.check()
+  }
+  async check() {
+    try {
+      const value = await AsyncStorage.getItem('@MySuperStore:key');
+      if (value !== null){
+        // We have data!!
+        global.gotEEM = value;
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log("fuck2");
+    }
+ }
+
   _onPressButtonCOLOR() {
     Alert.alert('C!')
   }

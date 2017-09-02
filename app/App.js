@@ -96,6 +96,7 @@ class HomeScreen extends React.Component {
 
 
 class ChatScreen extends React.Component {
+
   // Nav options can be defined as a function of the screen's props:
   static navigationOptions = ({ navigation })  => ({
     title: `Chat with ${navigation.state.params.user}`,

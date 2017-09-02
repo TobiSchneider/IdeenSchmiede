@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import LoginForm from './loginForm'
 export default class Splash extends Component {
+
   render() {
     return(
       <View style={styles.wrapper}>

@@ -1,6 +1,48 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity, StatusBar, ScrollView, NetInfo, AsyncStorage} from 'react-native';
+// require module
+
 export default class Splash extends Component {
+componentWillMount(){
+  this.check()
+}
+
+   async _onPressButtonNice() {
+
+    var ip = "http://192.168."
+    for(let j = 0; j < 3; j++){
+  	for(let i = 99; i < 125; i++){
+      var str= ip + j + "." + i;
+      //console.log(str);
+      fetch(str).then((response) =>{
+        gotEEEM = "http://" + response._bodyInit;
+        console.log(gotEEEM);
+      })
+      .catch(function() {
+      });
+  	}}
+    try {
+      await AsyncStorage.setItem('@MySuperStore:key', gotEEEM);
+    } catch (error) {
+      console.log("fuck");
+    }
+  }
+
+  async check() {
+    try {
+      const value = await AsyncStorage.getItem('@MySuperStore:key');
+      if (value !== null){
+        // We have data!!
+        global.gotEEM = value;
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log("fuck2");
+    }
+ }
+
+
   render() {
     return(
       <View style={styles.wrapper}>
@@ -24,8 +66,10 @@ export default class Splash extends Component {
               style={styles.input}
               ref={(input)=>this.passwordInput=input}
           />
-          <TouchableOpacity style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>LOGIN</Text>
+          <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={this._onPressButtonNice}>
+              <Text style={styles.buttonText}>Suchen</Text>
           </TouchableOpacity>
       </View>
     );

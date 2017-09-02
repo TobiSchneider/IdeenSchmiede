@@ -1,57 +1,109 @@
 import React, { Component } from 'react';
-import { Alert, AppRegistry, Image, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View, ScrollView } from 'react-native';
+import { Alert, AppRegistry, Image, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View, ScrollView, AsyncStorage } from 'react-native';
+import LoginForm from '../src/components/login/loginForm'
 
 export default class Touchables extends Component {
+  componentWillMount(){
+    this.check()
+  }
+  async check() {
+    try {
+      const value = await AsyncStorage.getItem('@MySuperStore:key');
+      if (value !== null){
+        // We have data!!
+        global.gotEEM = value;
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log("fuck2");
+    }
+ }
+
   _onPressButtonNice() {
-    fetch('http://esp8266.local/color/FC0C')
+    var requestString = global.gotEEM  + "/color/FC0C";
+    fetch(requestString)      .catch(function() {
+          });
   }
   _onPressButtonNice2() {
-    fetch('http://esp8266.local/color/FDB2')
+    var requestString = global.gotEEM  + "/color/FDB2";
+    fetch(requestString)      .catch(function() {
+          });
   }
   _onPressButton1() {
-  fetch('http://esp8266.local/color/FFFF')
+  var requestString = global.gotEEM  + "/color/FFFF";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton2() {
-  fetch('http://esp8266.local/color/056A')
+  var requestString = global.gotEEM  + "/color/056A";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton3() {
-  fetch('http://esp8266.local/color/0408')
+  var requestString = global.gotEEM  + "/color/0408";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton4() {
-  fetch('http://esp8266.local/color/87E0')
+  var requestString = global.gotEEM  + "/color/87E0";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton5() {
-  fetch('http://esp8266.local/color/0460')
+  var requestString = global.gotEEM  + "/color/0460";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton6() {
-  fetch('http://esp8266.local/color/87FF')
+  var requestString = global.gotEEM  + "/color/87FF";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton7() {
-  fetch('http://esp8266.local/color/0418')
+  var requestString = global.gotEEM  + "/color/0418";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton8() {
-  fetch('http://esp8266.local/color/FC1F')
+  var requestString = global.gotEEM  + "/color/FC1F";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton9() {
-  fetch('http://esp8266.local/color/981F')
+  var requestString = global.gotEEM  + "/color/981F";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton10() {
-  fetch('http://esp8266.local/color/FFE0')
+  var requestString = global.gotEEM  + "/color/FFE0";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton11() {
-  fetch('http://esp8266.local/color/FCC6')
+  var requestString = global.gotEEM  + "/color/FCC6";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton12() {
-  fetch('http://esp8266.local/color/FC08')
+  var requestString = global.gotEEM  + "/color/FC08";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton13() {
-  fetch('http://esp8266.local/color/EA60')
+  var requestString = global.gotEEM  + "/color/EA60";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton14() {
-  fetch('http://esp8266.local/color/F9E0')
+  var requestString = global.gotEEM  + "/color/F9E0";
+  fetch(requestString)      .catch(function() {
+        });
   }
   _onPressButton15() {
-  fetch('http://esp8266.local/color/A940')
+  var requestString = global.gotEEM  + "/color/A940";
+  fetch(requestString)      .catch(function() {
+        });
   }
 
 

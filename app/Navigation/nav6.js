@@ -1,15 +1,35 @@
 import React, { Component } from 'react';
-import { Alert, AppRegistry, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, AppRegistry, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View, AsyncStorage } from 'react-native';
 
 export default class Touchables extends Component {
+  componentWillMount(){
+    this.check()
+  }
+  async check() {
+    try {
+      const value = await AsyncStorage.getItem('@MySuperStore:key');
+      if (value !== null){
+        // We have data!!
+        global.gotEEM = value;
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log("fuck2");
+    }
+ }
+
   _onPressButtonFade() {
-    fetch('http://esp8266.local/frans/a')
+    var requestString = global.gotEEM  + "/frans/a";
+    fetch(requestString)
   }
   _onPressButtonEinschieben() {
-    fetch('http://esp8266.local/frans/b')
+    var requestString = global.gotEEM  + "/frans/b";
+    fetch(requestString)
   }
   _onPressButtonHart() {
-    fetch('http://esp8266.local/frans/c')
+    var requestString = global.gotEEM  + "/frans/c";
+    fetch(requestString)
   }
 
   render() {
