@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  AsyncStorage,
 } from 'react-native';
 import Nav1 from './Navigation/nav1'
 import Nav2 from './Navigation/nav2'
@@ -27,16 +28,33 @@ import { StackNavigator } from 'react-navigation';
 
 
 class HomeScreen extends React.Component {
+  componentWillMount(){
+    this.check()
+  }
+  async check() {
+    var ip = "http://192.168."
+    for(let j = 0; j < 3; j++){
+    for(let i = 99; i < 125; i++){
+      var str= ip + j + "." + i;
+      //console.log(str);
+      fetch(str).then((response) =>{
+        global.gotEEM = "http://" + response._bodyInit;
+        console.log(gotEEM);
+      })
+      .catch(function() {
+      });
+    }}
+ }
   static navigationOptions = {
     title: 'Proprius Lesezeit',
-  };
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.logoContainer}>
       <Image
           style={styles.logo}
-          source={require('./src/components/images/login/login2.jpg')}>
+          source={require('./src/components/images/what.png')}>
 
           <View style={styles.container}>
 
@@ -69,13 +87,6 @@ class HomeScreen extends React.Component {
              underlayColor="white">
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Mode</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress ={() => navigate('Connect', { user: 'hi' })}
-             underlayColor="white">
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>WIFI</Text>
               </View>
             </TouchableOpacity>
 
@@ -148,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#fff',
-    backgroundColor: 'rgba(255,255,255,0.4)',
+    backgroundColor: 'rgba(255,255,255,0.45)',
   },
   logoContainer:{
       justifyContent: 'center',
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
   buttonText: {
     padding: 20,
     textAlign: 'center',
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 16
   },
