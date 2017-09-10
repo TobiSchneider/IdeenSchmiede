@@ -88,10 +88,11 @@ static const int phraseUHR[4]       = {0,8,10,0};
   boolean transEinschieben = 1;
   int array_i;
   int array[20][3];
+  boolean Mode_autoHelligkeit = 1;
   //------------------------------------------------
 
 
-Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(11, 12, 2,
+Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(11, 12, 5,
   NEO_MATRIX_TOP     + NEO_MATRIX_LEFT +
   NEO_MATRIX_ROWS + NEO_MATRIX_ZIGZAG,
   NEO_GRB            + NEO_KHZ800);
@@ -128,6 +129,44 @@ void initClock(){
     matrix.drawPixel(j,10,BLACK);
     matrix.show();
     delay(initTime);
+  }
+  matrix.setBrightness (0);
+  for (int i = 0; i<100; i++){
+    matrix.drawPixel(2,1,WHITE);
+    matrix.drawPixel(2,2,WHITE);
+    matrix.drawPixel(2,2,WHITE);
+    matrix.drawPixel(2,3,WHITE);
+    matrix.drawPixel(2,4,WHITE);
+    matrix.drawPixel(2,5,WHITE);
+    matrix.drawPixel(2,6,WHITE);
+    matrix.drawPixel(2,7,WHITE);
+    matrix.drawPixel(2,8,WHITE);
+    matrix.drawPixel(3,1,WHITE);
+    matrix.drawPixel(3,2,WHITE);
+    matrix.drawPixel(3,3,WHITE);
+    matrix.drawPixel(3,4,WHITE);
+    matrix.drawPixel(3,5,WHITE);
+    matrix.drawPixel(3,6,WHITE);
+    matrix.drawPixel(3,7,WHITE);
+    matrix.drawPixel(3,8,WHITE);
+    matrix.drawPixel(4,7,WHITE);
+    matrix.drawPixel(4,8,WHITE);
+    matrix.drawPixel(5,7,WHITE);
+    matrix.drawPixel(5,8,WHITE);
+    matrix.drawPixel(6,7,WHITE);
+    matrix.drawPixel(6,8,WHITE);
+    matrix.drawPixel(7,5,WHITE);
+    matrix.drawPixel(7,6,WHITE);
+    matrix.drawPixel(7,7,WHITE);
+    matrix.drawPixel(6,4,WHITE);
+    matrix.drawPixel(6,5,WHITE);
+    matrix.drawPixel(5,4,WHITE);
+    matrix.drawPixel(5,5,WHITE);
+    matrix.drawPixel(4,4,WHITE);
+    matrix.drawPixel(4,5,WHITE);
+    matrix.setBrightness (i);
+    matrix.show();
+    delay(100);
   }
 }
 
@@ -502,6 +541,14 @@ void displayWords() {
       array[array_i][1] =hourEINS[2];
       array[array_i][2] =hourEINS[3];
     matrix.drawLine(hourEINS[1],hourEINS[3],hourEINS[2],hourEINS[3],color);
+    }
+  }
+  if(Mode_autoHelligkeit){
+    if(hours%24 >= 22 || hours%24 < 6){
+      matrix.setBrightness (25);
+    }
+    else{
+      matrix.setBrightness (numbersC);
     }
   }
   trigger=0;
